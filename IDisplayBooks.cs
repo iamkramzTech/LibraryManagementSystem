@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Library_Management_System
 {
-    public interface ILibrarycs
+    public interface IDisplayBooks
     {
-        void AddBook(Book book);
-        void Checkout(string isbn);
-        void DisplayBooks();
+        void DisplayAllBooks();
+        //void DisplayAvailableBooks();
+        //void DisplayBookDetails(string isbn);
     }
 }

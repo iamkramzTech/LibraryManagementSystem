@@ -11,10 +11,19 @@ namespace Library_Management_System
         private string _title;
         private string _author;
         private string _isbn;
-        private bool _IsAvailable;
+        private bool _IsAvailable = true;
         private string _genre;
-        public Book()
+       public Book()
         {
+
+        }
+        public Book(string title,string author,string isbn,string genre)
+        {
+            _title = title;
+            _author = author;
+            _isbn = isbn;
+            _genre = genre;
+            _IsAvailable = true;
 
         }
         public string Title
@@ -35,14 +44,9 @@ namespace Library_Management_System
         }
         public bool Availability
         {
-            get 
-            { 
-                return _IsAvailable; 
-            }
-            set
-            {
-                _IsAvailable = value;
-            }
+            get { return _IsAvailable; }
+            set { _IsAvailable = value; }
         }
+      
     }
 }

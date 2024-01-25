@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Library_Management_System
 {
-    public interface ILibrarycs
+    public interface IAddRemoveBooks
     {
-        void AddBook(Book book);
-        void Checkout(string isbn);
-        void DisplayBooks();
+        void AddBooks(Book books);
+        void RemoveBooks(string isbn);
     }
 }

@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Library_Management_System
 {
-    public interface ILibrarycs
+    public class ReturnProcessor : IReturnable
     {
-        void AddBook(Book book);
-        void Checkout(string isbn);
-        void DisplayBooks();
+       public void ReturnBook()
+        {
+            Console.WriteLine("The Book is returned");        
+        }
     }
 }

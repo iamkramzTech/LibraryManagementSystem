@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Library_Management_System
 {
-    public interface IUser
+    public interface IReturnable
     {
-        void CheckOut();
         void ReturnBook();
     }
 }
