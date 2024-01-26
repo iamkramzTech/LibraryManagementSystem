@@ -43,6 +43,7 @@ namespace Library_Management_System
         public void AddBooks(Book book)
         {
             books.Add(book);
+            Console.WriteLine("Book Added Sucessfully!");
         }
         public void RemoveBooks(string isbn)
         {
