@@ -14,16 +14,13 @@ namespace Library_Management_System
         public string? Password { get; private set; }
 
         private Dictionary<string, string> _librarianCredentials;
+        private const string LibrarianFilePath = "librarians.txt";
 
         public Library()
         {
             books = new List<Book>();
             // Initialize or load librarian credentials (from a file, database, etc.)
-            _librarianCredentials = new Dictionary<string, string>
-            {
-                {"librarian1","$mylib123"}
-
-            };
+            _librarianCredentials = ReadLibrarianCredentials();
         }
         public bool LoginLibrarian(string username, string password)
         {
@@ -39,6 +36,41 @@ namespace Library_Management_System
             }
            
             return false;
+        }
+
+        private static Dictionary<string, string> ReadLibrarianCredentials()
+        {
+            Dictionary<string, string> credentials = new Dictionary<string, string>();
+
+            try
+            {
+                // Read lines from the text file
+                string[] lines = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(),LibrarianFilePath));
+
+                foreach (string line in lines)
+                {
+                    // Split each line into username and password using comma as delimiter
+                    string[] parts = line.Split(',');
+
+                    if (parts.Length == 2)
+                    {
+                        string username = parts[0].Trim();
+                        string password = parts[1].Trim();
+
+                        // Add username and password to the dictionary
+                        credentials[username] = password;
+                    }
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                // Handle file not found exception (e.g., create the file)
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Librarians file not found. Creating a new file.");
+                File.WriteAllText(LibrarianFilePath, string.Empty);
+            }
+
+            return credentials;
         }
         public void AddBooks(Book book)
         {
