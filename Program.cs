@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace Library_Management_System
 {
@@ -11,11 +12,11 @@ namespace Library_Management_System
 
             var library1 = new Library();
             
-            var book1 = new Book("Java Programming 1", "kramz", "978-0596-155-7", "Programming");
+            var book1 = new Book("Java Programming 1", "kramz", "978-6-78-90123-4-6", "Programming");
             var book2 = new Book
             {
                 Title = "Data Structures and Algorithims using C",
-                ISBN = "979 - 0596 - 155 - 8",
+                ISBN = "978-7-89-01234-5-7",
                 Author = "N. Maholtra",
                 Genre = "Computer Science"
             };
@@ -102,33 +103,84 @@ namespace Library_Management_System
         }
         private static void AddBook(Library library)
         {
-           // Book addBook;
-
-            Console.WriteLine("**Add Books**");
-            Console.Write("Book Title: ");
-            var title = Console.ReadLine();
-            Console.Write("Author: ");
-            var author = Console.ReadLine();
-            Console.Write("ISBN: ");
-            var isbn = Console.ReadLine();
-            Console.Write("Genre: ");
-            var genre = Console.ReadLine();
-           library.AddBooks(new Book
+            bool sucess=false;
+            // Book addBook;
+            do
             {
-                Title = title,
-                Author = author,
-                ISBN = isbn,
-                Genre = genre
-            });
+                Console.WriteLine("**Add Books**");
+                Console.Write("Input Book Title: ");
+                var title = Console.ReadLine();
+                Console.Write("Input Book Author: ");
+                var author = Console.ReadLine();
+                Console.WriteLine("**Note: Must be ISBN-13 format. Prefix Number 978 or 979 consist of 13 numbers separated by hypens**");
+                Console.Write("Input valid ISBN Number( ex: 978-3-16-14841-0-0 ): ");
+                var isbn = Console.ReadLine();
+                Console.Write("Input Book Genre: ");
+                var genre = Console.ReadLine();
+
+                //Check if all Field is Fill up
+                if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(author) || string.IsNullOrEmpty(isbn) || string.IsNullOrEmpty(genre))
+                {
+                    Console.WriteLine("All Field Must not Empty!.\nTry Again..");
+                }
+                else
+                {
+                    if (!IsValidISBN13(isbn))
+                    {
+                        Console.WriteLine("Error! Please Enter valid ISBN-13 Format");
+                    }
+                    else
+                    {
+
+                        library.AddBooks(new Book
+                        {
+                            Title = title,
+                            Author = author,
+                            ISBN = isbn,
+                            Genre = genre
+                        });
+                        sucess = true;
+                    }
+                }
+            }
+            while (sucess != true);
             
         }
         private static void RemoveBook(Library library)
         {
             //Book removeBook = new Book();
             Console.WriteLine("**Remove Books**");
-            Console.Write("Enter ISBN NUmber Format(xxx-x-xxxxx-x): ");
+            Console.Write("Enter ISBN NUmber Format(ex: 978-3-16-14841-0-0): ");
             var removeISBN = Console.ReadLine();
-            library.RemoveBooks(removeISBN);
+            if (!IsValidISBN13(removeISBN))
+            {
+                Console.WriteLine("Enter Valid ISBN-13 Number");
+            }
+            else
+            {
+                library.RemoveBooks(removeISBN);
+            }
+        }
+        private static bool IsValidISBN13(string isbn)
+        {
+            // Regular expression for ISBN-13
+            string isbn13Pattern = @"^\d{3}-\d{1,5}-\d{1,7}-\d{1,8}-\d{1,7}-\d$";
+            // Check if the input matches the pattern
+            return Regex.IsMatch(isbn, isbn13Pattern);
+
+
+            /*ISBN-13 generated code
+                //1. 978 - 3 - 16 - 14841 - 0 - 0
+                //2. 978 - 1 - 23 - 45678 - 9 - 1
+                //3. 978 - 2 - 34 - 56789 - 0 - 2
+                //4. 978 - 3 - 45 - 67890 - 1 - 3
+                //5. 978 - 4 - 56 - 78901 - 2 - 4
+                //6. 978 - 5 - 67 - 89012 - 3 - 5
+                //7. 978 - 6 - 78 - 90123 - 4 - 6
+                //8. 978 - 7 - 89 - 01234 - 5 - 7
+                //9. 978 - 8 - 90 - 12345 - 6 - 8
+                //10. 978 - 9 - 01 - 23456 - 7 - 9
+            */
         }
     }
 }
