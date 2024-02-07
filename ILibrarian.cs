@@ -8,7 +8,7 @@ namespace Library_Management_System
 {
     public interface ILibrarian
     {
-        //void SignupLibrarian();
+        
         bool LoginLibrarian(string username, string password);
     }
 }
